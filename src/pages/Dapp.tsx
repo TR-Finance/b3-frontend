@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 import TopNav from '../components/nav/TopNav';
 import { useEagerConnect, useInactiveListener } from '../hooks/connectorHooks';
 import Withdraw from './Withdraw';
@@ -23,13 +24,17 @@ const Dapp = () => {
 
   return (
     <>
-      <TopNav />
-      <Routes>
-        <Route path="/" element={<Withdraw />} />
-        <Route path="/withdraw" element={<Withdraw />} />
-        <Route path="/stake" element={<Stake />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <Box w="100%" h="8%">
+        <TopNav />
+      </Box>
+      <Box w="100%" h="92%">
+        <Routes>
+          <Route path="/" element={<Withdraw />} />
+          <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/stake" element={<Stake />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Box>
     </>
   );
 };

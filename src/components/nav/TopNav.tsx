@@ -7,8 +7,10 @@ const TopNav = () => {
   const location = useLocation();
 
   return (
-    <nav>
+    <nav style={{ width: '100%', height: '100%' }}>
       <HStack
+        w="100%"
+        h="100%"
         justify="stretch"
         borderBottomWidth={2}
         bg="whitesmoke"

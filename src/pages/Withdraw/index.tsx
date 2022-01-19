@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// TODO: Remove line above after file is fixed
 import { ethers, providers, utils, Wallet } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
@@ -14,6 +12,7 @@ import {
   ADDRESS_ETHEREUM_BBBEthPoolV1,
   ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
 } from '../../constants/addresses';
+import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
@@ -60,16 +59,21 @@ const Withdraw = () => {
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 
-    // TODO: Ryan -- try to store destination and amount using <input> element with onChange and useState
     withdrawalContract.withdraw('INSERT DESTINATION ADDRESS', { value: BigInt('1000000000000') });
   };
 
+  // TODO: Use drop-down menu on mobile. See: https://chakra-ui.com/docs/features/responsive-styles
   return (
-    <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
+    <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md" w="100%" h="100%">
       <Center flexDir="column">
         <Heading fontSize="xl">B^3 Fast Withdrawal</Heading>
         <Text mt={4}>Withdraw your ETH from Arbitrum without waiting 7 days</Text>
+        <Text mt={4}>Total Liquidity (max amount you can withdraw): 0 ETH</Text>
         <Text mt={4}>Wallet balance: {parseFloat(utils.formatEther(etherBalance || 0)).toFixed(4)} ETH</Text>
+
+        <br />
+
+        <WithdrawMenu />
       </Center>
     </Box>
   );

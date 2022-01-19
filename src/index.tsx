@@ -11,6 +11,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { BrowserRouter } from 'react-router-dom';
 
 import Dapp from './pages/Dapp';
+import './index.css';
 
 const queryClient = new QueryClient();
 

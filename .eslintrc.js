@@ -33,6 +33,9 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
 
+    // Erroring when a variable is unused makes a poor dev experience
+    '@typescript-eslint/no-unused-vars': ['warn'],
+
     // Flag prettier warnings in ESLint
     'prettier/prettier': ['warn'],
   },
