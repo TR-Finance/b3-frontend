@@ -1,6 +1,9 @@
-import TopNav from './components/nav/TopNav';
-import Withdraw from './components/withdraw/Withdraw';
-import { useEagerConnect, useInactiveListener } from './hooks/connectorHooks';
+import { Routes, Route } from 'react-router-dom';
+import TopNav from '../components/nav/TopNav';
+import { useEagerConnect, useInactiveListener } from '../hooks/connectorHooks';
+import Withdraw from './Withdraw';
+import Stake from './Stake';
+import About from './About';
 
 /**
  * TODO: Make components for a page that will:
@@ -21,7 +24,12 @@ const Dapp = () => {
   return (
     <>
       <TopNav />
-      <Withdraw />
+      <Routes>
+        <Route path="/" element={<Withdraw />} />
+        <Route path="/withdraw" element={<Withdraw />} />
+        <Route path="/stake" element={<Stake />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </>
   );
 };

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// TODO: Remove line above after file is fixed
 import { ethers, providers, utils, Wallet } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
@@ -5,10 +7,13 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Box, Center, Heading, Text } from '@chakra-ui/react';
 
 import { useEtherBalance } from '../../state/queries';
-import * as ArbitrumAddresses from '../../contracts/arbitrum/contract-addresses.json';
-import * as EthereumAddresses from '../../contracts/ethereum/contract-addresses.json';
-import ArbitrumArtifact from '../../contracts/arbitrum/ArbitrumWithdrawalV1.json';
+import ArbitrumABI from '../../abis/ArbitrumWithdrawalV1.json';
 import { ArbitrumWithdrawalV1 } from '../../abis/types';
+import {
+  ADDRESS_ETHEREUM_BridgeBackBetterV1,
+  ADDRESS_ETHEREUM_BBBEthPoolV1,
+  ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
+} from '../../constants/addresses';
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
@@ -36,11 +41,11 @@ const Withdraw = () => {
     }
     const ethProvider = new providers.JsonRpcProvider(process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
 
-    if ((await ethProvider.getCode(EthereumAddresses.BBBEthPoolV1)) === '0x') {
+    if ((await ethProvider.getCode(ADDRESS_ETHEREUM_BBBEthPoolV1)) === '0x') {
       console.error('You need to deploy the BBBEthPoolV1 contract first');
       return;
     }
-    if ((await ethProvider.getCode(EthereumAddresses.BridgeBackBetterV1)) === '0x') {
+    if ((await ethProvider.getCode(ADDRESS_ETHEREUM_BridgeBackBetterV1)) === '0x') {
       console.error('You need to deploy the BridgeBackBetterV1 contract first');
       return;
     }
@@ -50,8 +55,8 @@ const Withdraw = () => {
     const arbWallet = new Wallet(process.env.REACT_APP_RINKEBY_PRIVATE_KEY as string, arbProvider);
 
     const withdrawalContract = (await new ethers.Contract(
-      ArbitrumAddresses.ArbitrumWithdrawalV1,
-      ArbitrumArtifact.abi,
+      ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
+      ArbitrumABI,
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 

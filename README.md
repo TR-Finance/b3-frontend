@@ -9,7 +9,7 @@
 ```sh
 cd frontend
 npm install
-npm contracts:compile
+npm run contracts:compile
 npm start
 ```
 

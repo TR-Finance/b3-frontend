@@ -29,6 +29,10 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
 
+    // Using variables before they're defined is not a problem
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+
     // Flag prettier warnings in ESLint
     'prettier/prettier': ['warn'],
   },

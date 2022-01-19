@@ -8,8 +8,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
+import { BrowserRouter } from 'react-router-dom';
 
-import Dapp from './Dapp';
+import Dapp from './pages/Dapp';
 
 const queryClient = new QueryClient();
 
@@ -21,14 +22,16 @@ const getLibrary = (provider: any): Web3Provider => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <ChakraProvider resetCSS>
-          <Dapp />
-        </ChakraProvider>
-        <ReactQueryDevtools position="bottom-right" />
-      </Web3ReactProvider>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <ChakraProvider resetCSS>
+            <Dapp />
+          </ChakraProvider>
+          <ReactQueryDevtools position="bottom-right" />
+        </Web3ReactProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );
