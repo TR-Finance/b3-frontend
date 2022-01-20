@@ -13,5 +13,10 @@ const getEtherBalance = async (chainId: number, address: string) => {
   const data = await provider.getBalance(address);
   return data;
 };
-
 export default useEtherBalance;
+
+// export const getNumber = (num: number) =>
+//   useMutation("someKey", () => getNum(num));
+// const getNum = async (num: number) => {
+//   return num + 1;
+// };

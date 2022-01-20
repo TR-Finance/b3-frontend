@@ -1,8 +1,9 @@
 import { Box, Button, HStack, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const WithdrawMenu = () => {
+const WithdrawMenu = (props) => {
   const [withdrawAmt, setWithdrawAmt] = useState(0);
+  const [withdrawAddress, setWithdrawAddress] = useState('');
 
   const onChangeWithdrawAmt = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWithdrawAmt(parseFloat(event.target.value));
@@ -21,7 +22,7 @@ const WithdrawMenu = () => {
           <Input type="number" value={withdrawAmt} onChange={onChangeWithdrawAmt} />
         </Box>
       </Box>
-      <Button>Withdraw</Button>
+      <Button onClick={(withdrawAmt) => props.setAmount(withdrawAmt)}>Withdraw</Button>
     </Box>
   );
 };

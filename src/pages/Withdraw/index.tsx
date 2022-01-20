@@ -1,8 +1,9 @@
-import { ethers, providers, utils, Wallet } from 'ethers';
+import React, {useState} from "react";
+import {BytesLike, ethers, providers, utils, Wallet} from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 
-import { Box, Center, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Heading, Text } from '@chakra-ui/react';
 
 import { useEtherBalance } from '../../state/queries';
 import ArbitrumABI from '../../abis/ArbitrumWithdrawalV1.json';
@@ -13,9 +14,14 @@ import {
   ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
 } from '../../constants/addresses';
 import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
+import {getProvider} from "../../connectors";
+
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
+
+  const [withdrawAmt, setWithdrawAmt] = useState<number>(0);
+  const [withdrawAddress, setWithdrawAddress] = useState<string>('');
 
   const { data: etherBalance, isLoading: etherBalanceLoading } = useEtherBalance(chainId || 0, account || '');
 
@@ -24,7 +30,7 @@ const Withdraw = () => {
   }
 
   const Withdrawal = async () => {
-    if (chainId !== 1337 && chainId !== 42161) {
+    if (chainId !== 1337 && chainId !== 421611) {
       console.warn(
         "You're not running on Arbitrum One (mainnet) or Arbitrum Rinkeby (testnet). Fast withdrawals must " +
           "send transactions to the protocol's contract on either Arbitrum-Rinkeby or Arbitrum-mainnet. " +
@@ -38,7 +44,8 @@ const Withdraw = () => {
     if (!window.ethereum) {
       return;
     }
-    const ethProvider = new providers.JsonRpcProvider(process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
+
+    const ethProvider = new ethers.providers.AlchemyProvider('rinkeby', process.env.REACT_APP_ETHEREUM_RINKEBY_PROVIDER_URL);
 
     if ((await ethProvider.getCode(ADDRESS_ETHEREUM_BBBEthPoolV1)) === '0x') {
       console.error('You need to deploy the BBBEthPoolV1 contract first');
@@ -50,8 +57,9 @@ const Withdraw = () => {
     }
 
     console.log(`Connecting wallet to provider on ${chainId}...`);
-    const arbProvider = new providers.JsonRpcProvider(process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
-    const arbWallet = new Wallet(process.env.REACT_APP_RINKEBY_PRIVATE_KEY as string, arbProvider);
+    const arbProvider = new ethers.providers.AlchemyProvider('arbitrum-rinkeby', process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
+
+    const arbWallet = await new ethers.Wallet(process.env.REACT_APP_RINKEBY_PRIVATE_KEY as string, arbProvider);
 
     const withdrawalContract = (await new ethers.Contract(
       ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
@@ -59,7 +67,7 @@ const Withdraw = () => {
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 
-    withdrawalContract.withdraw('INSERT DESTINATION ADDRESS', { value: BigInt('1000000000000') });
+    await withdrawalContract.withdraw('SOME DESTINATION', { value: BigInt('100000000000000') });
   };
 
   // TODO: Use drop-down menu on mobile. See: https://chakra-ui.com/docs/features/responsive-styles
@@ -73,7 +81,10 @@ const Withdraw = () => {
 
         <br />
 
-        <WithdrawMenu />
+        <WithdrawMenu
+            setAmount={withdrawAmt => setWithdrawAmt(withdrawAmt)}
+        />
+        <Button onClick={Withdrawal}>Withdraw</Button>
       </Center>
     </Box>
   );

@@ -11,8 +11,6 @@ const ConnectWallet = () => {
 
   const onClick = () => {
     activate(injectedConnector);
-    console.log(account);
-    console.log(chainId);
   };
 
   return (
