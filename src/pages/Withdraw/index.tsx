@@ -14,14 +14,13 @@ import {
   ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
 } from '../../constants/addresses';
 import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
-import {getProvider} from "../../connectors";
-
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
 
   const [withdrawAmt, setWithdrawAmt] = useState<number>(0);
-  const [withdrawAddress, setWithdrawAddress] = useState<string>('');
+  const [withdrawAddy, setWithdrawAddy] = useState<string>('');
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   const { data: etherBalance, isLoading: etherBalanceLoading } = useEtherBalance(chainId || 0, account || '');
 
@@ -67,8 +66,13 @@ const Withdraw = () => {
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 
-    await withdrawalContract.withdraw('SOME DESTINATION', { value: BigInt('100000000000000') });
+    await withdrawalContract.withdraw(withdrawAddy, { value: BigInt(1000000000000000000*withdrawAmt) });
   };
+
+  if(isReady) {
+    setIsReady(false);
+    Withdrawal();
+  }
 
   // TODO: Use drop-down menu on mobile. See: https://chakra-ui.com/docs/features/responsive-styles
   return (
@@ -82,9 +86,10 @@ const Withdraw = () => {
         <br />
 
         <WithdrawMenu
-            setAmount={withdrawAmt => setWithdrawAmt(withdrawAmt)}
+            setWithdrawAmt={setWithdrawAmt}
+            setWithdrawAddy={setWithdrawAddy}
+            setIsReady={setIsReady}
         />
-        <Button onClick={Withdrawal}>Withdraw</Button>
       </Center>
     </Box>
   );
