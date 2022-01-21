@@ -1,21 +1,17 @@
-import { Box, Button, HStack, Input } from '@chakra-ui/react';
-import React, {Dispatch, SetStateAction, useState} from 'react';
-
-type Dispatcher<S> = Dispatch<SetStateAction<S>>;
+import React, {useState} from 'react';
+import { Box, Button, Input } from '@chakra-ui/react';
 
 interface Props {
-  setWithdrawAmt: Dispatcher<number>;
-  setWithdrawAddy: Dispatcher<string>;
-  setIsReady: Dispatcher<boolean>;
+  callWithdrawal: (address: string, amount: number) => void;
 }
 
-const WithdrawMenu = ({setWithdrawAmt, setWithdrawAddy,setIsReady}:Props) => {
+const WithdrawMenu = ({callWithdrawal}:Props) => {
 const [withdrawAmount, setWithdrawAmount] = useState(0);
 const [withdrawAddress, setWithdrawAddress] = useState('');
 
 const onChangeWithdrawAmt = (event: React.ChangeEvent<HTMLInputElement>) => {
   setWithdrawAmount(parseFloat(event.target.value));
-  setWithdrawAddress('SOME ADDRESS HERE')
+  setWithdrawAddress('SOME ADDRESS HERE');
 };
 
   const onButtonClick = () => {
@@ -27,9 +23,7 @@ const onChangeWithdrawAmt = (event: React.ChangeEvent<HTMLInputElement>) => {
       console.warn("You must enter an address to which you wish to withdraw");
       return;
     }
-    setWithdrawAmt(withdrawAmount);
-    setWithdrawAddy(withdrawAddress);
-    setIsReady(true);
+    callWithdrawal(withdrawAddress, withdrawAmount);
   }
 
   return (

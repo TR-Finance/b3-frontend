@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {BytesLike, ethers, providers, utils, Wallet} from 'ethers';
+import React from "react";
+import {ethers, utils} from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 
-import { Box, Button, Center, Heading, Text } from '@chakra-ui/react';
+import { Box, Center, Heading, Text } from '@chakra-ui/react';
 
 import { useEtherBalance } from '../../state/queries';
 import ArbitrumABI from '../../abis/ArbitrumWithdrawalV1.json';
@@ -18,17 +18,13 @@ import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
 
-  const [withdrawAmt, setWithdrawAmt] = useState<number>(0);
-  const [withdrawAddy, setWithdrawAddy] = useState<string>('');
-  const [isReady, setIsReady] = useState<boolean>(false);
-
   const { data: etherBalance, isLoading: etherBalanceLoading } = useEtherBalance(chainId || 0, account || '');
 
   if (!active) {
     return <div>Please connect your wallet</div>;
   }
 
-  const Withdrawal = async () => {
+  const Withdrawal = async (address:string, amount:number) => {
     if (chainId !== 1337 && chainId !== 421611) {
       console.warn(
         "You're not running on Arbitrum One (mainnet) or Arbitrum Rinkeby (testnet). Fast withdrawals must " +
@@ -66,13 +62,9 @@ const Withdraw = () => {
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 
-    await withdrawalContract.withdraw(withdrawAddy, { value: BigInt(1000000000000000000*withdrawAmt) });
+    await withdrawalContract.withdraw(address, { value: BigInt(1000000000000000000*amount) });
   };
 
-  if(isReady) {
-    setIsReady(false);
-    Withdrawal();
-  }
 
   // TODO: Use drop-down menu on mobile. See: https://chakra-ui.com/docs/features/responsive-styles
   return (
@@ -86,9 +78,7 @@ const Withdraw = () => {
         <br />
 
         <WithdrawMenu
-            setWithdrawAmt={setWithdrawAmt}
-            setWithdrawAddy={setWithdrawAddy}
-            setIsReady={setIsReady}
+            callWithdrawal={Withdrawal}
         />
       </Center>
     </Box>
