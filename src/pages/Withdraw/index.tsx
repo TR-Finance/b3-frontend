@@ -77,9 +77,7 @@ const Withdraw = () => {
 
         <br />
 
-        <WithdrawMenu
-            callWithdrawal={Withdrawal}
-        />
+        <WithdrawMenu callWithdrawal={Withdrawal} />
       </Center>
     </Box>
   );
