@@ -10,5 +10,4 @@ const Stake = () =>
             </Center>
         </Box>
 
-
 export default Stake;
