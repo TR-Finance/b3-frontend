@@ -1,5 +1,4 @@
 // Heavily borrows from: https://github.com/Uniswap/interface/blob/eb09894b736b507b2d707c157a4016c74dfc3468/src/hooks/web3.ts
-
 import { useEffect, useState } from 'react';
 
 import { useQueryClient } from 'react-query';

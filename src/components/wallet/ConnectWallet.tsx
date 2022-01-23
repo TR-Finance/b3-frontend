@@ -13,17 +13,42 @@ const ConnectWallet = () => {
     activate(injectedConnector);
   };
 
+  const chainIdToNetwork = () => {
+    if (error && error instanceof UnsupportedChainIdError) return 'Unsupported Network';
+
+    switch (chainId) {
+      case 1:
+        return 'Ethereum';
+      case 31337:
+        return 'Hardhat (dev)';
+      case 4:
+        return 'Rinkeby';
+      case 1337:
+        return 'Localhost (dev)';
+      case 421611:
+        return 'Arbitrum Rinkeby';
+      default:
+        return 'Unsupported Network';
+    }
+  };
+
   return (
     <Box w="100%" p={1} display="flex" justifyContent="flex-end">
-      {error instanceof UnsupportedChainIdError && error.message}
-      {active ? (
-        <div>
+      {active && (
+        <>
+          <Tag size="md" key="connected network" variant="subtle" colorScheme="cyan" borderRadius="full">
+            {chainIdToNetwork()}
+          </Tag>
           <Tag size="md" key="connected wallet" variant="subtle" colorScheme="cyan" borderRadius="full">
             <TagLeftIcon boxSize="15px" as={MdOutlineCheckCircle} color="green" />
-            <TagLabel>{account}</TagLabel>
+            <TagLabel>
+              {account?.substring(0, 6)}...{account?.substring(account.length - 4, account.length)}
+            </TagLabel>
           </Tag>
-        </div>
-      ) : (
+        </>
+      )}
+      {!active && error && error instanceof UnsupportedChainIdError && <>Unsupported Network</>}
+      {!active && !(error && error instanceof UnsupportedChainIdError) && (
         <Button colorScheme="blue" onClick={onClick}>
           Connect Metmask
         </Button>

@@ -5,6 +5,7 @@ import { useEagerConnect, useInactiveListener } from '../hooks/connectorHooks';
 import Withdraw from './Withdraw';
 import Stake from './Stake';
 import About from './About';
+import BottomNav from '../components/nav/BottomNav';
 
 /**
  * TODO: Make components for a page that will:
@@ -34,6 +35,9 @@ const Dapp = () => {
           <Route path="/stake" element={<Stake />} />
           <Route path="/about" element={<About />} />
         </Routes>
+      </Box>
+      <Box position="fixed" z-index="99" bottom="25px" left="0" w="100%" h="8%">
+        <BottomNav />
       </Box>
     </>
   );

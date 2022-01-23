@@ -28,7 +28,10 @@ export const getProvider = (chainId: number): Provider => {
     case 1337:
       return new ethers.providers.JsonRpcProvider('http://localhost:8545');
     case 421611:
-      return new ethers.providers.AlchemyProvider('arbitrum-rinkeby', process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
+      return new ethers.providers.AlchemyProvider(
+        'arbitrum-rinkeby',
+        process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL,
+      );
     default:
       throw new Error('Unsupported provider');
   }

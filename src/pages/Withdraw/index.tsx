@@ -1,5 +1,5 @@
-import React from "react";
-import {ethers, utils} from 'ethers';
+import React from 'react';
+import { ethers, utils } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 
@@ -24,7 +24,7 @@ const Withdraw = () => {
     return <div>Please connect your wallet</div>;
   }
 
-  const Withdrawal = async (address:string, amount:number) => {
+  const Withdrawal = async (address: string, amount: number) => {
     if (chainId !== 1337 && chainId !== 421611) {
       console.warn(
         "You're not running on Arbitrum One (mainnet) or Arbitrum Rinkeby (testnet). Fast withdrawals must " +
@@ -40,7 +40,10 @@ const Withdraw = () => {
       return;
     }
 
-    const ethProvider = new ethers.providers.AlchemyProvider('rinkeby', process.env.REACT_APP_ETHEREUM_RINKEBY_PROVIDER_URL);
+    const ethProvider = new ethers.providers.AlchemyProvider(
+      'rinkeby',
+      process.env.REACT_APP_ETHEREUM_RINKEBY_PROVIDER_URL,
+    );
 
     if ((await ethProvider.getCode(ADDRESS_ETHEREUM_BBBEthPoolV1)) === '0x') {
       console.error('You need to deploy the BBBEthPoolV1 contract first');
@@ -52,7 +55,10 @@ const Withdraw = () => {
     }
 
     console.log(`Connecting wallet to provider on ${chainId}...`);
-    const arbProvider = new ethers.providers.AlchemyProvider('arbitrum-rinkeby', process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL);
+    const arbProvider = new ethers.providers.AlchemyProvider(
+      'arbitrum-rinkeby',
+      process.env.REACT_APP_ARBITRUM_RINKEBY_PROVIDER_URL,
+    );
 
     const arbWallet = await new ethers.Wallet(process.env.REACT_APP_RINKEBY_PRIVATE_KEY as string, arbProvider);
 
@@ -62,9 +68,8 @@ const Withdraw = () => {
       arbWallet,
     )) as ArbitrumWithdrawalV1;
 
-    await withdrawalContract.withdraw(address, { value: BigInt(1000000000000000000*amount) });
+    await withdrawalContract.withdraw(address, { value: BigInt('1000000000000000000') * BigInt(amount) });
   };
-
 
   // TODO: Use drop-down menu on mobile. See: https://chakra-ui.com/docs/features/responsive-styles
   return (
