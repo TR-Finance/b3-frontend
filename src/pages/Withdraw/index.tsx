@@ -1,7 +1,7 @@
 import React from 'react';
 import { ethers, utils } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
-import { Web3Provider } from '@ethersproject/providers';
+import {Network, Web3Provider} from '@ethersproject/providers';
 
 import { Box, Center, Heading, Text } from '@chakra-ui/react';
 
@@ -14,6 +14,7 @@ import {
   ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
 } from '../../constants/addresses';
 import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
+import NetworksMenu from "../../components/withdraw/NetworksMenu";
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
@@ -80,8 +81,7 @@ const Withdraw = () => {
         <Text mt={4}>Total Liquidity (max amount you can withdraw): 0 ETH</Text>
         <Text mt={4}>Wallet balance: {parseFloat(utils.formatEther(etherBalance || 0)).toFixed(4)} ETH</Text>
 
-        <br />
-
+        <NetworksMenu />
         <WithdrawMenu callWithdrawal={Withdrawal} />
       </Center>
     </Box>
