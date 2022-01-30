@@ -3,10 +3,10 @@ import { Web3Provider } from '@ethersproject/providers';
 
 import { Box, Button, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react';
 import { MdOutlineCheckCircle } from 'react-icons/md';
-import {utils} from "ethers";
+import { utils } from 'ethers';
 
 import { injectedConnector } from '../../connectors';
-import {useEtherBalance} from "../../state/queries";
+import { useEtherBalance } from '../../state/queries';
 
 const ConnectWallet = () => {
   const { chainId, account, activate, active, error } = useWeb3React<Web3Provider>();
@@ -46,13 +46,12 @@ const ConnectWallet = () => {
           <Tag size="md" key="wallet balance" variant="subtle" colorScheme="cyan" borderRadius="full">
             {parseFloat(utils.formatEther(etherBalance || 0)).toFixed(4)} ETH
             <Tag size="md" key="connected wallet" variant="subtle" colorScheme="blue" borderRadius="full">
-            <TagLeftIcon boxSize="15px" as={MdOutlineCheckCircle} color="green" />
-            <TagLabel>
-              {account?.substring(0, 6)}...{account?.substring(account.length - 4, account.length)}
-            </TagLabel>
+              <TagLeftIcon boxSize="15px" as={MdOutlineCheckCircle} color="green" />
+              <TagLabel>
+                {account?.substring(0, 6)}...{account?.substring(account.length - 4, account.length)}
+              </TagLabel>
+            </Tag>
           </Tag>
-          </Tag>
-
         </>
       )}
       {!active && error && error instanceof UnsupportedChainIdError && <>Unsupported Network</>}

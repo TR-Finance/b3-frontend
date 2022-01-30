@@ -1,7 +1,7 @@
 import React from 'react';
 import { ethers, utils } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
-import {Network, Web3Provider} from '@ethersproject/providers';
+import { Network, Web3Provider } from '@ethersproject/providers';
 
 import { Box, Center, Heading, Text } from '@chakra-ui/react';
 
@@ -14,7 +14,7 @@ import {
   ADDRESS_ARBITRUM_ArbitrumWithdrawalV1,
 } from '../../constants/addresses';
 import WithdrawMenu from '../../components/withdraw/WithdrawMenu';
-import NetworksMenu from "../../components/withdraw/NetworksMenu";
+import NetworksMenu from '../../components/withdraw/NetworksMenu';
 
 const Withdraw = () => {
   const { chainId, account, active } = useWeb3React<Web3Provider>();
