@@ -33,13 +33,13 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
 
-    // Erroring when a variable is unused makes a poor dev experience
     // Some best practices slow down development and should be warnings instead of errors
     '@typescript-eslint/no-unused-vars': 'warn',
     'spaced-comment': 'warn',
     'prefer-template': 'warn',
     'arrow-body-style': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
+    'no-multi-str': 'warn',
 
     // Flag prettier warnings in ESLint
     'prettier/prettier': 'warn',

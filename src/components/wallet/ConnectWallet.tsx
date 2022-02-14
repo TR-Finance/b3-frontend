@@ -56,7 +56,7 @@ const ConnectWallet = () => {
       )}
       {!active && error && error instanceof UnsupportedChainIdError && <>Unsupported Network</>}
       {!active && !(error && error instanceof UnsupportedChainIdError) && (
-        <Button colorScheme="blue" onClick={onClick}>
+        <Button colorScheme="orange" onClick={onClick}>
           Connect Metamask
         </Button>
       )}

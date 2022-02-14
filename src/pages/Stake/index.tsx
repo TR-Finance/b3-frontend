@@ -21,11 +21,13 @@ const Stake = () => {
     return <div>Please connect your wallet</div>;
   }
 
-  const onClickStake = async (address: string, amount: number) => {
+  const onClickStake = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
+
+  const stake = async (address: string, amount: number) => {
     if (chainId !== 1337 && chainId !== 4) {
       console.warn(
-        "You're not running on Rinkeby or mainnet. Staking must send transactions to \
-              either Ethereum Rinkeby or mainnet. Use the option '--network <rinkeby|mainnet>'",
+        "You're not running on Rinkeby or mainnet. Staking must send transactions to " +
+          "either Ethereum Rinkeby or mainnet. Use the option '--network <rinkeby|mainnet>'",
       );
       return;
     }

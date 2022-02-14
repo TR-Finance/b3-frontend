@@ -16,7 +16,7 @@ const Dapp = () => {
 
   return (
     <>
-      <Box w="100%" h="8%">
+      <Box w="100%" h="8%" zIndex="99">
         <TopNav />
       </Box>
       <Box w="100%" h="92%">

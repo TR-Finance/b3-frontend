@@ -8,19 +8,19 @@ const MainPageLinks = () => {
     <>
       <Link to="/withdraw">
         <Button
-          colorScheme="red"
-          variant={location.pathname === '/' || location.pathname === '/withdraw' ? 'solid' : 'ghost'}
+          colorScheme="orange"
+          variant={location.pathname === '/' || location.pathname === '/withdraw' ? 'outline' : 'ghost'}
         >
           Withdraw
         </Button>
       </Link>
       <Link to="/stake">
-        <Button colorScheme="red" variant={location.pathname === '/stake' ? 'solid' : 'ghost'}>
+        <Button colorScheme="orange" variant={location.pathname === '/stake' ? 'outline' : 'ghost'}>
           Stake
         </Button>
       </Link>
       <Link to="/about">
-        <Button colorScheme="red" variant={location.pathname === '/about' ? 'solid' : 'ghost'}>
+        <Button colorScheme="orange" variant={location.pathname === '/about' ? 'outline' : 'ghost'}>
           About
         </Button>
       </Link>
